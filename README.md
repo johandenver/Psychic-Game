@@ -3,6 +3,8 @@
 Computer Psychic Game. These apps will run in the browser, and feature dynamically updated HTML and CSS powered by JavaScript code.
 <img src="assets/images/app.jpg">
 
+To view live application: https://johandenver.github.io/Psychic-Game/
+
 
 1. The app randomly picks a letter, and the user has to guess which letter the app chose. This includes the following text      on the page:
 
