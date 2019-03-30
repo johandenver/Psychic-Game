@@ -8,4 +8,5 @@ body {
 
 #alert-message {
     background: lightyellow;
+    margin: 0 300px;
 }

@@ -1,110 +1,100 @@
-document.onload = function(){
+
+// create an array with the possible choices
+var letterChoices = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
+console.log(letterChoices)
+
+//var choice = math.floor(math.random()*26)
+
+//Set baseline -intial values
+var wins = 0;
+var losses = 0;
+var guessesLeft = 10;
+var guessesChosen = [];
+var computerChoice = generateLetter();
 
 
+/* 0: Display game data on the page.
+    id="wins"
+    id="losses"
+    id="guesses-left"
+    id="guesses-so-far"
+*/
+document.querySelector("#wins").textContent = wins
+document.querySelector("#losses").textContent = losses
+document.querySelector("#guesses-left").textContent = guessesLeft
+document.querySelector("#guesses-so-far").textContent = guessesChosen.join(", ")
 
-    // create an array with the possible choices
-    var letterChoices = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
-    console.log(letterChoices)
+// 1: generate a random letter a-z. 
+function generateLetter() {
+    // create a random number from 0 - 25
+    // use the number as an index to select a letter from letterChoices array. 
+    var choice = Math.floor(Math.random() * letterChoices.length);
+    return letterChoices[choice]
+    
+}
 
-    //var choice = math.floor(math.random()*26)
+/*
+2: capture the user input (guess).
 
-    //Set baseline -intial values
-    var wins = 0;
-    var losses = 0;
-    var guessesLeft = 10;
-    var guessesChosen = [];
-    var computerChoice = generateLetter();
+    2.1: normalize and validate the input. (change to lower case, make sure its a letter etc.)   
+*/
+document.onkeydown = function(event) {
+    document.querySelector("#alert-message").textContent = ""
+    var letter = event.key.toLowerCase();
+    if(letter>="a" && letter<= "z") { 
+        evaluateUserInput(letter)
 
-
-    /* 0: Display game data on the page.
-        id="wins"
-        id="losses"
-        id="guesses-left"
-        id="guesses-so-far"
-    */
-    document.querySelector("#wins").textContent = wins
-    document.querySelector("#losses").textContent = losses
-    document.querySelector("#guesses-left").textContent = guessesLeft
-    document.querySelector("#guesses-so-far").textContent = guessesChosen.join(", ")
-
-    // 1: generate a random letter a-z. 
-    function generateLetter() {
-        // create a random number from 0 - 25
-        // use the number as an index to select a letter from letterChoices array. 
-        var choice = Math.floor(Math.random() * letterChoices.length);
-        return letterChoices[choice]
-        
+    } else { 
+        document.querySelector("#alert-message").textContent = "Please select a letter"
     }
+}
 
-    /*
-    2: capture the user input (guess).
+/* 
+3: evaluate the user's input. (check if it is equal to the random computer choice). 
+    3.1: check that the user hasn't already guessed the letter. 
+    3.2: If they haven't guessed the letter and it is incorrect, need to reduce the guess count by 1. 
+    3.3: Add the letter to the chosen guesses array. 
+    3.4: Check if the user has guesses remaining. 
+    3.5: If user choses correctly, then need to alert user and reset the game, and increment wins by one. 
+    3.6: If user loses game, need to increment losses by one and game resets. 
 
-        2.1: normalize and validate the input. (change to lower case, make sure its a letter etc.)   
-    */
-    document.onkeydown = function(event) {
-        document.querySelector("#alert-message").textContent = ""
-        var letter = event.key.toLowerCase();
-        if(letter>="a" && letter<= "z") { 
-            evaluateUserInput(letter)
-
-        } else { 
-            document.querySelector("#alert-message").textContent = "Please select a letter"
-        }
-    }
-
-    /* 
-    3: evaluate the user's input. (check if it is equal to the random computer choice). 
-        3.1: check that the user hasn't already guessed the letter. 
-        3.2: If they haven't guessed the letter and it is incorrect, need to reduce the guess count by 1. 
-        3.3: Add the letter to the chosen guesses array. 
-        3.4: Check if the user has guesses remaining. 
-        3.5: If user choses correctly, then need to alert user and reset the game, and increment wins by one. 
-        3.6: If user loses game, need to increment losses by one and game resets. 
-
-    */
-    function evaluateUserInput(letter) {
-        if(letter === computerChoice) {
-            wins++;
-            document.querySelector("#wins").textContent = wins;
-            document.querySelector("#alert-message").textContent = "You won!!" ;
-            reset()
+*/
+function evaluateUserInput(letter) {
+    if(letter === computerChoice) {
+        wins++;
+        document.querySelector("#wins").textContent = wins;
+        document.querySelector("#alert-message").textContent = "You won!!" ;
+        reset()
+    } else {
+        if(guessesChosen.includes(letter)){
+            document.querySelector("#alert-message").textContent = "you have already picked this letter, pick another!" ;
         } else {
-            if(guessesChosen.includes(letter)){
-                document.querySelector("#alert-message").textContent = "you have already picked this letter, pick another!" ;
-            } else {
-                guessesChosen.push(letter);
-                guessesLeft--;
-                document.querySelector("#guesses-left").textContent = guessesLeft
-                document.querySelector("#guesses-so-far").textContent = guessesChosen.join(", ")
-                if (guessesLeft === 0) {
-                    losses++;
-                    document.querySelector("#losses").textContent = losses;
-                    document.querySelector("#alert-message").textContent = "You Lost!";
-                    reset()
-                }
-            } 
-        }
-
-    }
-
-
-    //4: Create a game reset. Reset all variables back to initial values (except for wins/losses) and then redisplay game data. 
-
-    function reset() {
-        guessesLeft = 10;
-        guessesChosen = [];
-        computerChoice = generateLetter();
-
+            guessesChosen.push(letter);
+            guessesLeft--;
+            document.querySelector("#guesses-left").textContent = guessesLeft
+            document.querySelector("#guesses-so-far").textContent = guessesChosen.join(", ")
+            if (guessesLeft === 0) {
+                losses++;
+                document.querySelector("#losses").textContent = losses;
+                document.querySelector("#alert-message").textContent = "You Lost!";
+                reset()
+            }
+        } 
     }
 
 }
 
 
-//function randomAnswer () {
- //   var char = "abcdefghijklmnopqrstuvwxyz";
-   //  return chars.substr( Math.floor(Math.random() * 26), 1);
-//} 
+//4: Create a game reset. Reset all variables back to initial values (except for wins/losses) and then redisplay game data. 
 
+function reset() {
+    guessesLeft = 10;
+    guessesChosen = [];
+    computerChoice = generateLetter();
+
+}
+
+// Initial pseudocode: 
 // the player will guess the letter. 
  // define an event of a keytouch of letter and push to guessesChosen [];
 
