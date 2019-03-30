@@ -1,0 +1,11 @@
+body {
+    margin: 20px auto;
+    padding: 20 px;
+    background: lightblue;
+    text-align: center;
+    font-family: 'Dosis', sans-serif;
+}
+
+#alert-message {
+    background: lightyellow;
+}

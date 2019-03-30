@@ -1,0 +1,12 @@
+1: generate a random letter a-z. 
+2: capture the user input (guess).
+    2.1: normalize and validate the input. (change to lower case, make sure its a letter etc.)
+3: evaluate the user's input. (check if it is equal to the random computer choice). 
+    3.1: check that the user hasn't already guessed the letter. 
+    3.2: If they haven't guessed the letter and it is incorrect, need to reduce the guess count by 1. 
+    3.3: Add the letter to the chosen guesses array. 
+    3.4: Check if the user has guesses remaining. 
+    3.5: If user choses correctly, then need to alert user and reset the game, and increment wins by one. 
+    3.6: If user loses game, need to increment losses by one and game resets. 
+4: Display game data on the page. 
+5: Create a game reset. Reset all variables back to initial values (except for wins/losses) and then redisplay game data.  
