@@ -38,13 +38,18 @@ function generateLetter() {
 
     2.1: normalize and validate the input. (change to lower case, make sure its a letter etc.)   
 */
+//event is the user pressing the key.
 document.onkeydown = function(event) {
+    //resets the alert
     document.querySelector("#alert-message").textContent = ""
+    //converts any user key in caps to lowercase.
     var letter = event.key.toLowerCase();
+    //limits the acceptable keys to letters only (no symbols or numbers).
     if(letter>="a" && letter<= "z") { 
         evaluateUserInput(letter)
 
     } else { 
+        //gives an alert if a non letter key is pushed.
         document.querySelector("#alert-message").textContent = "Please select a letter"
     }
 }
