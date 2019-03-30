@@ -65,22 +65,36 @@ document.onkeydown = function(event) {
 
 */
 function evaluateUserInput(letter) {
+    // if the chosen key by the user equals the ranom comptuter choice.
     if(letter === computerChoice) {
+        //the user wins (increased by one)
         wins++;
+        //records a win.
         document.querySelector("#wins").textContent = wins;
+        // updates the alert on the page with winning message. 
         document.querySelector("#alert-message").textContent = "You won!!" ;
+        //resets the game using the reset function from below. 
         reset()
     } else {
+        // else - meaning if the players chosen letter does not equal the computer choice.
         if(guessesChosen.includes(letter)){
+            // if the user picks the same letter a second choice, then the below alert appears on the page:
             document.querySelector("#alert-message").textContent = "you have already picked this letter, pick another!" ;
         } else {
+            //if it is not a letter the user has chosen before:
             guessesChosen.push(letter);
+            //the number of guesses (10 allowed) reduces by one"
             guessesLeft--;
+            // this updates the text for the guesses left amount:
             document.querySelector("#guesses-left").textContent = guessesLeft
+            // thie places the guesses on the page in the guesses chosen array in the format ", ".
             document.querySelector("#guesses-so-far").textContent = guessesChosen.join(", ")
             if (guessesLeft === 0) {
+                //once the number of guesses is reduced to zero it becomes a loss. and the number of losses increase by one. 
                 losses++;
+                //records the loss
                 document.querySelector("#losses").textContent = losses;
+                // updates the alert message on the page to show the loss.
                 document.querySelector("#alert-message").textContent = "You Lost!";
                 reset()
             }
